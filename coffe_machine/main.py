@@ -5,6 +5,7 @@ import data
 # ---------------------------- modules Defintions ---------------------------- #
 menu=data.menu
 resources=data.resources
+sales=[]
 # ---------------------------------------------------------------------------- #
 # ---------------------------------------------------------------------------- #
 #                             Function Definitions                             #
@@ -59,21 +60,63 @@ def change_resources(id):
     }
     return new_resources
 # ---------------------------------------------------------------------------- #
-
-user_choice=input("what would you like? (espresso/latte/cappuccino): ")
-if user_choice=="espresso":
-    print("please insert coins.")
-    quarters=int(input("How many quarters? "))
-    dimes=int(input("How many dimes? "))
-    nickles=int(input("How many nickles? "))
-    pennies=int(input("How many pennies? "))
-    check_empty=check_resources("espresso")
-    if check_empty==True:
-        change=check_money("espresso")
-        if change<0:
-            print("sorry there is not enough money, money refunded !")
-        else:
-            print(f"Here is {change} in change")
-            resources=change_resources("espresso")
-            print("Here is your 'espresso' Enjoy !")
-
+# ------- Give a complete report for resources of wate,milk and coffee ------- #
+def report(resources,sales):
+    water=resources['water']
+    milk=resources["milk"]
+    coffee=resources['coffee']
+    money=sum(sales)
+    print(f"Water: {water}\nMilk: {milk}\nCoffee: {coffee}\nMoney: {money}")
+    # ---------------------------------------------------------------------------- #
+while True:
+    user_choice=input("what would you like? (espresso/latte/cappuccino): ")
+    if user_choice=="espresso":
+        print("please insert coins.")
+        quarters=int(input("How many quarters? "))
+        dimes=int(input("How many dimes? "))
+        nickles=int(input("How many nickles? "))
+        pennies=int(input("How many pennies? "))
+        check_empty=check_resources("espresso")
+        if check_empty==True:
+            change=check_money("espresso",quarters,dimes,nickles,pennies)
+            if change<0:
+                print("sorry there is not enough money, money refunded !")
+            else:
+                print(f"Here is {change} in change")
+                resources=change_resources("espresso")
+                print("Here is your 'espresso' Enjoy !")
+                sales.append(menu['espresso']['cost'])
+    elif user_choice=="latte":
+        print("please insert coins.")
+        quarters=int(input("How many quarters? "))
+        dimes=int(input("How many dimes? "))
+        nickles=int(input("How many nickles? "))
+        pennies=int(input("How many pennies? "))
+        check_empty=check_resources("latte")
+        if check_empty==True:
+            change=check_money("latte",quarters,dimes,nickles,pennies)
+            if change<0:
+                print("sorry there is not enough money, money refunded !")
+            else:
+                print(f"Here is {change} in change")
+                resources=change_resources("latte")
+                print("Here is your 'latte' Enjoy !")
+                sales.append(menu['latte']['cost'])
+    elif user_choice=="cappuccino":
+        print("please insert coins.")
+        quarters=int(input("How many quarters? "))
+        dimes=int(input("How many dimes? "))
+        nickles=int(input("How many nickles? "))
+        pennies=int(input("How many pennies? "))
+        check_empty=check_resources("cappuccino")
+        if check_empty==True:
+            change=check_money("cappuccino",quarters,dimes,nickles,pennies)
+            if change<0:
+                print("sorry there is not enough money, money refunded !")
+            else:
+                print(f"Here is {change} in change")
+                resources=change_resources("cappuccino")
+                print("Here is your 'cappuccino' Enjoy !")
+                sales.append(menu['cappuccino']['cost'])
+    elif user_choice=="report":
+        report(resources,sales)
